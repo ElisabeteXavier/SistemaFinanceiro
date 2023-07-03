@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/template.xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sfcomp="http://xmlns.jcp.org/jsf/composite/sfcomp">
+
+    
+    <h:form>
+        <sfcomp:crudToolbar crudBean="#{permissaoBean}"></sfcomp:crudToolbar>
+        <p:panelGrid columns="2" rendered="#{permissaoBean.estado != 'PESQUISANDO'}">
+            
+            <p:outputLabel value="Nome"></p:outputLabel>
+            <p:inputText value="#{permissaoBean.entity.nome}"></p:inputText>
+            
+            <p:outputLabel value="Descrição"></p:outputLabel>
+            <p:inputText value="#{permissaoBean.entity.descricao}"></p:inputText>
+        </p:panelGrid>
+        <p:dataTable value="#{permissaoBean.entitys}" var="entity" rendered="#{permissaoBean.estado == 'PESQUISANDO'}">
+            <p:column>
+                <p:commandButton icon="fa-solid fa-pencil" update="@form"
+                                 actionListener="#{permissaoBean.editar(entity)}"
+                                 ></p:commandButton>
+            </p:column>
+            <p:column headerText="Nome">
+                <h:outputText value="#{entity.nome}"></h:outputText>
+            </p:column>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{entity.descricao}"></h:outputText>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+</ui:composition>

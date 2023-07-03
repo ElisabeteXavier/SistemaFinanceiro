@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/template.xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sf="http://xmlns.jcp.org/jsf/composite/sfcomp"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form>
+        <sf:crudToolbar crudBean="#{clienteBean}">
+            <p:button value="Relatório"></p:button>
+        </sf:crudToolbar>
+        <h1>Estado: #{clienteBean.estado}</h1>
+        <h:panelGrid columns="2" rendered="#{clienteBean.estado != 'PESQUISANDO'}">
+            <p:outputLabel value="Nome" for="inputNome"></p:outputLabel>
+            <p:inputText id="inputNome" value="#{clienteBean.entity.nome}"></p:inputText>
+            
+            <p:outputLabel value="Email" for="inputEmail"></p:outputLabel>
+            <p:inputText id="inputEmail" disabled="#{clienteBean.estado == 'EDITANDO'}" value="#{clienteBean.entity.email}"></p:inputText>
+            
+            <p:outputLabel value="CPF" for="inputCPF"></p:outputLabel>
+            <p:inputMask value="#{clienteBean.entity.cpf}" id="inputCPF" mask="999.999.999-99"></p:inputMask>
+            
+            <p:outputLabel value="Data Nascimento" for="@next"></p:outputLabel>
+            <p:inputText value="#{clienteBean.entity.dataNascimento}">
+                <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+            </p:inputText>
+            <!--<p:datePicker  monthNavigator="true" yearNavigator="true" yearRange="1950:3023" showWeek="true" value="#{clienteBean.entity.dataNascimento}" id="inputData"></p:datePicker>-->
+            
+        </h:panelGrid>
+        <p:dataTable value="#{clienteBean.entitys}" var="entity" rendered="#{clienteBean.estado == 'PESQUISANDO'}">
+            <p:column>
+                <p:commandButton icon="fa-solid fa-trash" update="@form"
+                                 actionListener="#{clienteBean.remover(entity)}"
+                                 ></p:commandButton>
+                <p:commandButton icon="fa-solid fa-pencil" update="@form"
+                                 actionListener="#{clienteBean.editar(entity)}"
+                                 ></p:commandButton>
+            </p:column>
+            <p:column headerText="Nome">
+                <h:outputText value="#{entity.nome}"></h:outputText>
+            </p:column>
+            <p:column headerText="Email">
+                <h:outputText value="#{entity.email}"></h:outputText>
+            </p:column>
+            <p:column headerText="CPF">
+                <h:outputText value="#{entity.cpf}"></h:outputText>
+            </p:column>
+            <p:column headerText="Data Nascimento">
+                <h:outputText value="#{entity.dataNascimento}">
+                <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>  
+                </h:outputText>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+</ui:composition>

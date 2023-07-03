@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sf="http://xmlns.jcp.org/jsf/composite/sfcomp">
+
+    <h:form enctype="multipart/form-data">
+        <sf:crudToolbar crudBean="#{produtoBean}">
+            <p:button value="Relatório"></p:button>
+        </sf:crudToolbar>
+        <h1>Estado: #{produtoBean.estado}</h1>
+        <h:panelGrid columns="2" rendered="#{produtoBean.estado != 'PESQUISANDO'}">
+            <p:outputLabel value="Nome" for="inputNome"></p:outputLabel>
+            <p:inputText id="inputNome" value="#{produtoBean.entity.nome}"></p:inputText>
+
+            <p:outputLabel value="Descrição" for="inputdesc"></p:outputLabel>
+            <p:inputText id="inputdesc" value="#{produtoBean.entity.descricao}" ></p:inputText>
+
+            <p:outputLabel value="Valor" for="inputvalor"></p:outputLabel>
+            <p:inputText id="inputvalor" value="#{produtoBean.entity.valor}"></p:inputText>
+
+
+            <p:outputLabel value="Data Fabricação" for="inputData"></p:outputLabel>
+            <p:datePicker  monthNavigator="true" yearNavigator="true" showWeek="true" value="#{produtoBean.entity.dataFabricacao}" id="inputData"></p:datePicker>
+
+            <p:outputLabel value="Marca"  ></p:outputLabel>
+            <p:autoComplete id="inputmarca" value="#{produtoBean.entity.marca}" var="marca"
+                            completeMethod="#{marcaBean.logic.completeMarca}" forceSelection="true"
+                            itemLabel="#{marca.nome}" itemValue="#{marca}" converter="marcaConverter"/>
+
+            <p:outputLabel value="Fornecedor" ></p:outputLabel>
+            <p:selectOneMenu id="inputFornecedor" value="#{produtoBean.entity.fornecedor}" required="false" label="Text 2" style="width: 12rem" converter="fornecedorConverter">
+                <f:selectItem itemLabel="Fornecedor" noSelectionOption="true" />
+                <f:selectItems value="#{fornecedorBean.logic.listar()}" var="fornecedor" itemLabel="#{fornecedor.nome}"  itemValue="#{fornecedor}"  />
+            </p:selectOneMenu>
+            
+            <p:outputLabel value="Imagem"></p:outputLabel>
+            <p:growl id="messages" showDetail="true" />
+            <p:fileUpload value="#{produtoBean.arquivo}" mode="advanced"   listener="#{produtoBean.handleFileUpload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+
+
+        </h:panelGrid>
+        <p:dataTable value="#{produtoBean.entitys}" var="entity" rendered="#{produtoBean.estado == 'PESQUISANDO'}">
+            <p:column>
+                <p:commandButton icon="fa-solid fa-trash" update="@form"
+                                 actionListener="#{produtoBean.remover(entity)}"
+                                 ></p:commandButton>
+                <p:commandButton icon="fa-solid fa-pencil" update="@form"
+                                 actionListener="#{produtoBean.editar(entity)}"
+                                 ></p:commandButton>
+            </p:column>
+            <p:column headerText="Nome">
+                <h:outputText value="#{entity.nome}"></h:outputText>
+            </p:column>
+              <p:column>
+                <img src="#{request.contextPath}/imagem?id=#{entity.id}" height="50px"></img>
+            </p:column>
+            <p:column headerText="Descrição">
+                <h:outputText value="#{entity.descricao}"></h:outputText>
+            </p:column>
+            <p:column headerText="Valor">
+                <h:outputText value="#{entity.valor}"></h:outputText>
+            </p:column>
+            <p:column headerText="Data Fabricação">
+                <h:outputText value="#{entity.dataFabricacao}"></h:outputText>
+            </p:column>
+            <p:column headerText="Marca">
+                <h:outputText value="#{entity.marca}"></h:outputText>
+            </p:column>
+            <p:column headerText="Fornecedor">
+                <h:outputText value="#{entity.fornecedor}"></h:outputText>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+</ui:composition>

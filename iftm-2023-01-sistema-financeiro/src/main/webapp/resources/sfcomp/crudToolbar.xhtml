@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="crudBean" class="br.edu.iftm.jsf.bean.GenericBean"
+                      required="true" shortDescription="Componente baseado no CRUD"></cc:attribute>
+        <cc:attribute name="exibeSalvar" default="true"></cc:attribute>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:commandButton icon="fa-solid fa-file" update="@form"
+                                 actionListener="#{cc.attrs.crudBean.novo()}" value="Novo"></p:commandButton>
+                <p:spacer width="4px"></p:spacer>
+                <p:commandButton icon="fa-solid fa-save" update="@next"
+                                 actionListener="#{cc.attrs.crudBean.salvar()}"
+                                 value="Salvar" rendered="#{cc.attrs.crudBean.estado != 'PESQUISANDO' and cc.attrs.exibeSalvar}"></p:commandButton>
+                <p:spacer width="4px"></p:spacer>
+                <p:commandButton icon="fa-solid #{cc.attrs.crudBean.estado != 'PESQUISANDO'?'fa-arrow-left':'fa-search'}" update="@form"
+                                 actionListener="#{cc.attrs.crudBean.listar()}" value="#{cc.attrs.crudBean.estado != 'PESQUISANDO'?'Voltar':'Pesquisar'}"></p:commandButton>
+            </p:toolbarGroup>
+            <p:toolbarGroup align="right">
+                <cc:insertChildren></cc:insertChildren>
+            </p:toolbarGroup>
+        </p:toolbar>
+    </cc:implementation>
+</html>

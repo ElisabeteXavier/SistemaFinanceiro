@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sistema Financeiro IFTM 2023/01</title>
+        <link rel="stylesheet" href="resources/financeiro/css/admin_principal.css"></link>
+    </h:head>
+    <h:body>
+        <aside class="menu">
+            <div class="logo">
+                <img src="resources/financeiro/imagens/logo.png"></img>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+                    <li><a href="index.html"><i class="fa-regular fa-file-lines"></i> Cadastros</a></li>
+                    <li><a href="index.html"><i class="fa-solid fa-cash-register"></i> Financeiro</a></li>
+                    <li><a href="index.html"><i class="fa-solid fa-boxes-stacked"></i> Estoque</a></li>
+                    <li><a href="index.html"><i class="fa-solid fa-chart-pie"></i> Relatórios</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="overlay-menu"></div>
+        <header>
+            <a href="#" class="btn-toogle-menu" title="Toogle menu"><i class="fa-solid fa-bars"></i></a>
+            <h1>Sistema financeiro</h1>
+        </header>
+        <main>
+            <div class="content">
+                <ui:insert></ui:insert>
+            </div>
+        </main>
+        <footer>
+            <p>IFTM - Atividade Escolar</p>
+        </footer>
+
+        <script src="https://kit.fontawesome.com/dcdd1dcc23.js" crossorigin="anonymous"></script>
+        <script src="resources/financeiro/js/script.js"></script>
+    </h:body>
+</html>
